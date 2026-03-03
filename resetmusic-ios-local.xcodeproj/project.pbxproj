@@ -1,0 +1,575 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		87559DE02F5779CE0063B985 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87559DCA2F5779CC0063B985 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 87559DD12F5779CC0063B985;
+			remoteInfo = "resetmusic-ios-local";
+		};
+		87559DEA2F5779CE0063B985 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87559DCA2F5779CC0063B985 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 87559DD12F5779CC0063B985;
+			remoteInfo = "resetmusic-ios-local";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		87559DD22F5779CC0063B985 /* resetmusic-ios-local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "resetmusic-ios-local.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		87559DDF2F5779CE0063B985 /* resetmusic-ios-localTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "resetmusic-ios-localTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		87559DE92F5779CE0063B985 /* resetmusic-ios-localUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "resetmusic-ios-localUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		87559DD42F5779CC0063B985 /* resetmusic-ios-local */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "resetmusic-ios-local";
+			sourceTree = "<group>";
+		};
+		87559DE22F5779CE0063B985 /* resetmusic-ios-localTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "resetmusic-ios-localTests";
+			sourceTree = "<group>";
+		};
+		87559DEC2F5779CE0063B985 /* resetmusic-ios-localUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "resetmusic-ios-localUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		87559DCF2F5779CC0063B985 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87559DDC2F5779CE0063B985 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87559DE62F5779CE0063B985 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		87559DC92F5779CC0063B985 = {
+			isa = PBXGroup;
+			children = (
+				87559DD42F5779CC0063B985 /* resetmusic-ios-local */,
+				87559DE22F5779CE0063B985 /* resetmusic-ios-localTests */,
+				87559DEC2F5779CE0063B985 /* resetmusic-ios-localUITests */,
+				87559DD32F5779CC0063B985 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		87559DD32F5779CC0063B985 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				87559DD22F5779CC0063B985 /* resetmusic-ios-local.app */,
+				87559DDF2F5779CE0063B985 /* resetmusic-ios-localTests.xctest */,
+				87559DE92F5779CE0063B985 /* resetmusic-ios-localUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		87559DD12F5779CC0063B985 /* resetmusic-ios-local */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87559DF32F5779CE0063B985 /* Build configuration list for PBXNativeTarget "resetmusic-ios-local" */;
+			buildPhases = (
+				87559DCE2F5779CC0063B985 /* Sources */,
+				87559DCF2F5779CC0063B985 /* Frameworks */,
+				87559DD02F5779CC0063B985 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				87559DD42F5779CC0063B985 /* resetmusic-ios-local */,
+			);
+			name = "resetmusic-ios-local";
+			packageProductDependencies = (
+			);
+			productName = "resetmusic-ios-local";
+			productReference = 87559DD22F5779CC0063B985 /* resetmusic-ios-local.app */;
+			productType = "com.apple.product-type.application";
+		};
+		87559DDE2F5779CE0063B985 /* resetmusic-ios-localTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87559DF62F5779CE0063B985 /* Build configuration list for PBXNativeTarget "resetmusic-ios-localTests" */;
+			buildPhases = (
+				87559DDB2F5779CE0063B985 /* Sources */,
+				87559DDC2F5779CE0063B985 /* Frameworks */,
+				87559DDD2F5779CE0063B985 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				87559DE12F5779CE0063B985 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				87559DE22F5779CE0063B985 /* resetmusic-ios-localTests */,
+			);
+			name = "resetmusic-ios-localTests";
+			packageProductDependencies = (
+			);
+			productName = "resetmusic-ios-localTests";
+			productReference = 87559DDF2F5779CE0063B985 /* resetmusic-ios-localTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		87559DE82F5779CE0063B985 /* resetmusic-ios-localUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87559DF92F5779CE0063B985 /* Build configuration list for PBXNativeTarget "resetmusic-ios-localUITests" */;
+			buildPhases = (
+				87559DE52F5779CE0063B985 /* Sources */,
+				87559DE62F5779CE0063B985 /* Frameworks */,
+				87559DE72F5779CE0063B985 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				87559DEB2F5779CE0063B985 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				87559DEC2F5779CE0063B985 /* resetmusic-ios-localUITests */,
+			);
+			name = "resetmusic-ios-localUITests";
+			packageProductDependencies = (
+			);
+			productName = "resetmusic-ios-localUITests";
+			productReference = 87559DE92F5779CE0063B985 /* resetmusic-ios-localUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		87559DCA2F5779CC0063B985 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					87559DD12F5779CC0063B985 = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
+					87559DDE2F5779CE0063B985 = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = 87559DD12F5779CC0063B985;
+					};
+					87559DE82F5779CE0063B985 = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = 87559DD12F5779CC0063B985;
+					};
+				};
+			};
+			buildConfigurationList = 87559DCD2F5779CC0063B985 /* Build configuration list for PBXProject "resetmusic-ios-local" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 87559DC92F5779CC0063B985;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 87559DD32F5779CC0063B985 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				87559DD12F5779CC0063B985 /* resetmusic-ios-local */,
+				87559DDE2F5779CE0063B985 /* resetmusic-ios-localTests */,
+				87559DE82F5779CE0063B985 /* resetmusic-ios-localUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		87559DD02F5779CC0063B985 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87559DDD2F5779CE0063B985 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87559DE72F5779CE0063B985 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		87559DCE2F5779CC0063B985 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87559DDB2F5779CE0063B985 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87559DE52F5779CE0063B985 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		87559DE12F5779CE0063B985 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 87559DD12F5779CC0063B985 /* resetmusic-ios-local */;
+			targetProxy = 87559DE02F5779CE0063B985 /* PBXContainerItemProxy */;
+		};
+		87559DEB2F5779CE0063B985 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 87559DD12F5779CC0063B985 /* resetmusic-ios-local */;
+			targetProxy = 87559DEA2F5779CE0063B985 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		87559DF12F5779CE0063B985 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		87559DF22F5779CE0063B985 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		87559DF42F5779CE0063B985 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.naushad.resetmusic-ios-local";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		87559DF52F5779CE0063B985 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.naushad.resetmusic-ios-local";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		87559DF72F5779CE0063B985 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.naushad.resetmusic-ios-localTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/resetmusic-ios-local.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/resetmusic-ios-local";
+			};
+			name = Debug;
+		};
+		87559DF82F5779CE0063B985 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.naushad.resetmusic-ios-localTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/resetmusic-ios-local.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/resetmusic-ios-local";
+			};
+			name = Release;
+		};
+		87559DFA2F5779CE0063B985 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.naushad.resetmusic-ios-localUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "resetmusic-ios-local";
+			};
+			name = Debug;
+		};
+		87559DFB2F5779CE0063B985 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.naushad.resetmusic-ios-localUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "resetmusic-ios-local";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		87559DCD2F5779CC0063B985 /* Build configuration list for PBXProject "resetmusic-ios-local" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87559DF12F5779CE0063B985 /* Debug */,
+				87559DF22F5779CE0063B985 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		87559DF32F5779CE0063B985 /* Build configuration list for PBXNativeTarget "resetmusic-ios-local" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87559DF42F5779CE0063B985 /* Debug */,
+				87559DF52F5779CE0063B985 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		87559DF62F5779CE0063B985 /* Build configuration list for PBXNativeTarget "resetmusic-ios-localTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87559DF72F5779CE0063B985 /* Debug */,
+				87559DF82F5779CE0063B985 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		87559DF92F5779CE0063B985 /* Build configuration list for PBXNativeTarget "resetmusic-ios-localUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87559DFA2F5779CE0063B985 /* Debug */,
+				87559DFB2F5779CE0063B985 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 87559DCA2F5779CC0063B985 /* Project object */;
+}
