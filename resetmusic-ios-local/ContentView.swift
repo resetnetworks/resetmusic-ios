@@ -8,14 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @State private var showWelcome = true
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack {
+            Color.black.ignoresSafeArea()
+
+            if showWelcome {
+                WelcomeView(
+                    onLoginSignUp: {
+                        // TODO: wire to LoginView when ready
+                    },
+                    onBrowseFirst: {
+                        withAnimation(.easeInOut(duration: 0.6)) {
+                            showWelcome = false
+                        }
+                    }
+                )
+                .transition(.opacity)
+            } else {
+                RootView()
+                    .transition(.opacity)
+            }
         }
-        .padding()
     }
 }
 
