@@ -9,10 +9,11 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var playerVM: PlayerViewModel
+    var onProfileTap: () -> Void = {}
 
     var body: some View {
         VStack(spacing: 0) {
-            AppTopBar(mode: .home(userName: "Naushad"))
+            AppTopBar(mode: .home(userName: "Guest"), onProfileTap: onProfileTap)
 
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 32) {

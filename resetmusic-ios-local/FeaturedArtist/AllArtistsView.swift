@@ -71,9 +71,12 @@ struct AllArtistsView: View {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.white)
+                        .frame(width: 44, height: 44)  // explicit HIG minimum
                 }
+                .buttonStyle(.plain)
+                .tint(.clear)
+                .contentShape(Rectangle())
             }
-            
             ToolbarItem(placement: .principal) {
                 Text("Artists")
                     .font(.custom("Jura-Bold", size: 18))

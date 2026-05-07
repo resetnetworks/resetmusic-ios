@@ -8,6 +8,6 @@
 import Foundation
 
 enum APIConfig {
-    static let baseURL = "https://api2.musicreset.com"
+    static let baseURL = "https://api.musicreset.com"
 //    static let baseURL = "http://localhost:4000"
 }

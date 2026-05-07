@@ -37,18 +37,14 @@ struct ArtistDetailView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: { dismiss() }) {
-                    ZStack {
-                        Circle()
-                            .fill(Color(red: 0.08, green: 0.09, blue: 0.12))
-                            .frame(width: 44, height: 44)
-
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(.white)
-                    }
-                    .contentShape(Circle())
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.white)
+                        .frame(width: 44, height: 44)  // explicit HIG minimum
                 }
                 .buttonStyle(.plain)
+                .tint(.clear)
+                .contentShape(Rectangle())
             }
             ToolbarItem(placement: .principal) {
                 Text(artist.name)
@@ -202,6 +198,38 @@ struct ArtistDetailView: View {
                     }
                     .padding(.horizontal, 20)
                 }
+            } else if albumViewModel.errorMessage != nil {
+                VStack(spacing: 12) {
+                    Image(systemName: "exclamationmark.circle")
+                        .font(.system(size: 32))
+                        .foregroundColor(.white.opacity(0.3))
+
+                    Text("Couldn't load albums")
+                        .font(.custom("Jura-Regular", size: 15))
+                        .foregroundColor(.white.opacity(0.5))
+
+                    Text("Check your connection and try again.")
+                        .font(.custom("Jura-Regular", size: 13))
+                        .foregroundColor(.white.opacity(0.4))
+                        .multilineTextAlignment(.center)
+
+                    Button(action: {
+                        Task {
+                            await albumViewModel.retryLoadAlbums()
+                        }
+                    }) {
+                        Text("Try Again")
+                            .font(.custom("Jura-SemiBold", size: 14))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 18)
+                            .padding(.vertical, 10)
+                            .background(Color(red: 0.25, green: 0.55, blue: 1.0))
+                            .clipShape(Capsule())
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: 160)
+                .padding(.horizontal, 20)
             } else if albumViewModel.albums.isEmpty {
                 VStack(spacing: 10) {
                     Image(systemName: "music.note.list")
@@ -282,8 +310,8 @@ struct ArtistDetailView: View {
                 }
                 Spacer()
                 Button(action: { showSubscribeSheet = true }) {  // ← wired
-                    Text("Subscribe Now")
-                        .font(.custom("Jura-SemiBold", size: 14))
+                    Text("Subscribe")
+                        .font(.custom("Jura-SemiBold", size: 16))
                         .foregroundColor(.white)
                         .lineLimit(1)
                         .padding(.horizontal, 20)

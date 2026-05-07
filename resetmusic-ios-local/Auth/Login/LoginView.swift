@@ -9,13 +9,11 @@
 import SwiftUI
 
 struct LoginView: View {
-
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var isLoading: Bool = false
+    @StateObject private var viewModel = LoginViewModel()
 
     var onCreateAccount: () -> Void = {}
     var onForgotPassword: () -> Void = {}
+    var onAuthenticated: () -> Void = {}
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -46,7 +44,7 @@ struct LoginView: View {
                         label: "email",
                         placeholder: "Enter your email",
                         icon: "envelope",
-                        text: $email,
+                        text: $viewModel.email,
                         keyboardType: .emailAddress
                     )
 
@@ -55,7 +53,7 @@ struct LoginView: View {
                             label: "password",
                             placeholder: "Enter your password",
                             icon: "lock",
-                            text: $password,
+                            text: $viewModel.password,
                             isSecure: true
                         )
 
@@ -66,13 +64,32 @@ struct LoginView: View {
                         }
                         .buttonStyle(.plain)
                     }
+
+                    if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .font(.custom("Jura-Regular", size: 13))
+                            .foregroundColor(Color(red: 0.85, green: 0.3, blue: 0.3))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+
+                    if let successMessage = viewModel.successMessage {
+                        Text(successMessage)
+                            .font(.custom("Jura-Regular", size: 13))
+                            .foregroundColor(Color(red: 0.25, green: 0.55, blue: 1.0))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 32)
 
                 // Login button
-                AuthPrimaryButton(title: "Login", isLoading: isLoading) {
-                    isLoading = true
+                AuthPrimaryButton(title: "Login", isLoading: viewModel.isLoading) {
+                    Task {
+                        let didSucceed = await viewModel.login()
+                        if didSucceed {
+                            onAuthenticated()
+                        }
+                    }
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 24)

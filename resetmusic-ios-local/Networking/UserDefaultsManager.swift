@@ -17,6 +17,7 @@ final class UserDefaultsManager {
 
     private enum Keys {
         static let lastPlayerTrack = "lastPlayerTrack"
+        static let currentAuthUser = "currentAuthUser"
     }
 
     func saveLastTrack(_ track: PersistedTrack) {
@@ -33,5 +34,21 @@ final class UserDefaultsManager {
 
     func clearLastTrack() {
         defaults.removeObject(forKey: Keys.lastPlayerTrack)
+    }
+
+    func saveCurrentUser(_ user: AuthUser) {
+        guard let data = try? JSONEncoder().encode(user) else { return }
+        defaults.set(data, forKey: Keys.currentAuthUser)
+    }
+
+    func loadCurrentUser() -> AuthUser? {
+        guard let data = defaults.data(forKey: Keys.currentAuthUser),
+              let user = try? JSONDecoder().decode(AuthUser.self, from: data)
+        else { return nil }
+        return user
+    }
+
+    func clearCurrentUser() {
+        defaults.removeObject(forKey: Keys.currentAuthUser)
     }
 }

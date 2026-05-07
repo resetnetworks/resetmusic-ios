@@ -11,4 +11,5 @@ import Foundation
 protocol AlbumServiceProtocol {
     func fetchAlbums(page: Int) async throws -> AlbumResponse
     func fetchAlbumsByArtist(artistId: String, page: Int) async throws -> ArtistAlbumsResponse
+    func fetchAlbum(id: String) async throws -> Album
 }

@@ -29,13 +29,17 @@ final class MockAlbumService: AlbumServiceProtocol {
         )
     }
 
+    func fetchAlbum(id: String) async throws -> Album {
+        mockAlbum(id: id, title: "enigmata")
+    }
+
     private func mockAlbum(id: String, title: String) -> Album {
         Album(
             id: id,
             title: title,
             slug: title.lowercased().replacingOccurrences(of: " ", with: "-"),
             coverImage: "https://d3tp8cbw5vz2ok.cloudfront.net/covers/11de53a6-975f-45b7-b713-0675b34f6375.jpg",
-            description: nil,
+            description: "Mock album description",
             releaseDate: nil,
             genre: ["Electronic"],
             accessType: "free",

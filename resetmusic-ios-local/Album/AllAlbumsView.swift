@@ -76,24 +76,15 @@ struct AllAlbumsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: { dismiss() }) {
-                    ZStack {
-                        Circle()
-                            .fill(Color(red: 0.08, green: 0.09, blue: 0.12))
-                            .frame(width: 44, height: 44)
-                            .overlay(
-                                Circle()
-                                    .stroke(Color.white.opacity(0.08), lineWidth: 1)
-                            )
-
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(.white)
-                    }
-                    .contentShape(Circle())
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.white)
+                        .frame(width: 44, height: 44)  // explicit HIG minimum
                 }
                 .buttonStyle(.plain)
+                .tint(.clear)
+                .contentShape(Rectangle())
             }
-            
             ToolbarItem(placement: .principal) {
                 Text("All Albums")
                     .font(.custom("Jura-Bold", size: 18))

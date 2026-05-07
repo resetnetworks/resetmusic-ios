@@ -60,7 +60,7 @@ struct FeaturedArtistRow: View {
     private var artistScroll: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 18) {
-                if viewModel.isLoading {
+                if viewModel.isLoading && viewModel.artists.isEmpty {
                     loadingPlaceholders
                 } else {
                     ForEach(viewModel.artists) { artist in

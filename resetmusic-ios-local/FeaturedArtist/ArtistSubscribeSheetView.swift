@@ -74,7 +74,7 @@ struct ArtistSubscribeSheetView: View {
                     .padding(.bottom, 20)
 
                 // ── Apple-safe note ───────────────────────────
-                Text("Subscriptions are managed through your Reset account on the web.")
+                Text("Subscriptions are managed through your Reset account outside the app.")
                     .font(.custom("Jura-Regular", size: 12))
                     .foregroundColor(.white.opacity(0.35))
                     .multilineTextAlignment(.center)

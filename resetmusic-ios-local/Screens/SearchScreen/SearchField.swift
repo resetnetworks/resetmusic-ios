@@ -32,13 +32,13 @@ struct SearchField: View {
                 .padding(.vertical, 14)
                 .focused($isFocused)
 
-            Button(action: {}) {
-                Image(systemName: "mic.fill")
-                    .font(.system(size: 16))
-                    .foregroundColor(.gray)
-                    .padding(.trailing, 16)
-            }
-            .buttonStyle(.plain)
+//            Button(action: {}) {
+//                Image(systemName: "mic.fill")
+//                    .font(.system(size: 16))
+//                    .foregroundColor(.gray)
+//                    .padding(.trailing, 16)
+//            }
+//            .buttonStyle(.plain)
         }
         .frame(maxWidth: .infinity)
         .background(Color(red: 0.18, green: 0.2, blue: 0.24))

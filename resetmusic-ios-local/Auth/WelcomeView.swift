@@ -34,7 +34,7 @@ struct WelcomeView: View {
     @State private var currentBgIndex = 0
     @State private var browsePressed = false
 
-    private let bgImages = ["welcome-bg-1", "welcome-bg", "welcome-bg-3"]
+    private let bgImages = ["welcome-bg", "welcome-bg-4", "welcome-bg-1"]
     private let bgTimer = Timer.publish(every: 4, on: .main, in: .common).autoconnect()
 
     var body: some View {
@@ -179,36 +179,34 @@ struct WelcomeView: View {
 
     private var buttonStack: some View {
         VStack(spacing: 14) {
-
-//            // Primary — Log in or Sign up
-//            Button(action: onLoginSignUp) {
-//                HStack(spacing: 10) {
-//                    Image(systemName: "person.fill")
-//                        .font(.system(size: 15, weight: .semibold))
-//                    Text("log in or sign up")
-//                        .font(.custom("Jura-Bold", size: 16))
-//                        .kerning(0.5)
-//                }
-//                .foregroundColor(.white)
-//                .frame(maxWidth: .infinity)
-//                .frame(height: 54)
-//                .background(
-//                    RoundedRectangle(cornerRadius: 14)
-//                        .fill(
-//                            LinearGradient(
-//                                colors: [
-//                                    Color(red: 0.059, green: 0.196, blue: 0.447), // #0F3272
-//                                    Color(red: 0.102, green: 0.365, blue: 0.706), // #1A5DB4
-//                                    Color(red: 0.231, green: 0.51, blue: 0.965)    // #3B82F6
-//                                ],
-//                                startPoint: .leading,
-//                                endPoint: .trailing
-//                            )
-//                        )
-//                        .shadow(color: Color(red: 0.231, green: 0.51, blue: 0.965).opacity(0.3), radius: 12, y: 4)
-//                )
-//            }
-//            .buttonStyle(.plain)
+            Button(action: onLoginSignUp) {
+                HStack(spacing: 10) {
+                    Image(systemName: "person.fill")
+                        .font(.system(size: 15, weight: .semibold))
+                    Text("log in or sign up")
+                        .font(.custom("Jura-Bold", size: 16))
+                        .kerning(0.5)
+                }
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .frame(height: 54)
+                .background(
+                    RoundedRectangle(cornerRadius: 14)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color(red: 0.059, green: 0.196, blue: 0.447),
+                                    Color(red: 0.102, green: 0.365, blue: 0.706),
+                                    Color(red: 0.231, green: 0.51, blue: 0.965)
+                                ],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .shadow(color: Color(red: 0.231, green: 0.51, blue: 0.965).opacity(0.3), radius: 12, y: 4)
+                )
+            }
+            .buttonStyle(.plain)
 
             // Secondary — Browse First
             Button(action: {
@@ -217,7 +215,7 @@ struct WelcomeView: View {
                 HStack(spacing: 10) {
                     Image(systemName: "music.note.list")
                         .font(.system(size: 15, weight: .medium))
-                    Text("browse first")
+                    Text("Browse the Catalogue")
                         .font(.custom("Jura-SemiBold", size: 16))
                         .kerning(0.5)
                 }

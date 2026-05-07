@@ -9,21 +9,18 @@
 import SwiftUI
 
 struct SignUpView: View {
-
-    @State private var name: String = ""
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var isLoading: Bool = false
+    @StateObject private var viewModel = SignUpViewModel()
 
     var onLogin: () -> Void = {}
+    var onAuthenticated: () -> Void = {}
 
     private var passwordHints: [(String, Bool)] {
         [
-            ("At least 8 characters", password.count >= 8),
-            ("Lowercase",             password.range(of: "[a-z]", options: .regularExpression) != nil),
-            ("Uppercase",             password.range(of: "[A-Z]", options: .regularExpression) != nil),
-            ("Number",                password.range(of: "[0-9]", options: .regularExpression) != nil),
-            ("Symbol",                password.range(of: "[^a-zA-Z0-9]", options: .regularExpression) != nil)
+            ("At least 8 characters", viewModel.password.count >= 8),
+            ("Lowercase",             viewModel.password.range(of: "[a-z]", options: .regularExpression) != nil),
+            ("Uppercase",             viewModel.password.range(of: "[A-Z]", options: .regularExpression) != nil),
+            ("Number",                viewModel.password.range(of: "[0-9]", options: .regularExpression) != nil),
+            ("Symbol",                viewModel.password.range(of: "[^a-zA-Z0-9]", options: .regularExpression) != nil)
         ]
     }
 
@@ -56,14 +53,14 @@ struct SignUpView: View {
                         label: "name",
                         placeholder: "Your name",
                         icon: "person.circle",
-                        text: $name
+                        text: $viewModel.name
                     )
 
                     AuthTextField(
                         label: "email",
                         placeholder: "your@email.com",
                         icon: "envelope",
-                        text: $email,
+                        text: $viewModel.email,
                         keyboardType: .emailAddress
                     )
 
@@ -72,12 +69,12 @@ struct SignUpView: View {
                             label: "password",
                             placeholder: "Create a strong password",
                             icon: "lock",
-                            text: $password,
+                            text: $viewModel.password,
                             isSecure: true
                         )
 
                         // Password validation hints — only shown while typing
-                        if !password.isEmpty {
+                        if !viewModel.password.isEmpty {
                             HStack(spacing: 0) {
                                 ForEach(Array(passwordHints.enumerated()), id: \.offset) { index, item in
                                     Text(item.0)
@@ -95,13 +92,32 @@ struct SignUpView: View {
                             .padding(.horizontal, 4)
                         }
                     }
+
+                    if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .font(.custom("Jura-Regular", size: 13))
+                            .foregroundColor(Color(red: 0.85, green: 0.3, blue: 0.3))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+
+                    if let successMessage = viewModel.successMessage {
+                        Text(successMessage)
+                            .font(.custom("Jura-Regular", size: 13))
+                            .foregroundColor(Color(red: 0.25, green: 0.55, blue: 1.0))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 32)
 
                 // Create Account button
-                AuthPrimaryButton(title: "Create Account", isLoading: isLoading) {
-                    isLoading = true
+                AuthPrimaryButton(title: "Create Account", isLoading: viewModel.isLoading) {
+                    Task {
+                        let didSucceed = await viewModel.signUp()
+                        if didSucceed {
+                            onAuthenticated()
+                        }
+                    }
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, 24)

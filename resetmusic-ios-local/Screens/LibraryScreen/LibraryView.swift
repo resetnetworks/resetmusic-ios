@@ -14,6 +14,7 @@ import Kingfisher
 struct LibraryView: View {
     @EnvironmentObject var playerVM: PlayerViewModel
     @StateObject private var vm = LibraryViewModel()
+    var onProfileTap: () -> Void = {}
     
     // 🔥 Search State
      @State private var showSearch = false
@@ -42,7 +43,8 @@ struct LibraryView: View {
                     onAdd: {
                         vm.showCreateSheet = true
                     }
-                )
+                ),
+                onProfileTap: onProfileTap
             )
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {

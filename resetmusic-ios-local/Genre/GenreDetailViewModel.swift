@@ -8,6 +8,47 @@
 import Foundation
 import Combine
 
+final class GenreDetailLocalStore {
+    private let userDefaults: UserDefaults
+
+    init(userDefaults: UserDefaults = .standard) {
+        self.userDefaults = userDefaults
+    }
+
+    func loadGenreDetail(slug: String) -> GenreDetailResponse? {
+        guard let payload = userDefaults.dictionary(forKey: cacheKey(for: slug)),
+              let success = payload["success"] as? Bool,
+              let genre = payload["genre"] as? String,
+              let total = payload["total"] as? Int else {
+            return nil
+        }
+
+        return GenreDetailResponse(
+            success: success,
+            genre: genre,
+            total: total,
+            page: 1,
+            pages: 1,
+            songs: []
+        )
+    }
+
+    func saveGenreDetail(_ response: GenreDetailResponse, slug: String) {
+        userDefaults.set(
+            [
+                "success": response.success,
+                "genre": response.genre,
+                "total": response.total
+            ],
+            forKey: cacheKey(for: slug)
+        )
+    }
+
+    private func cacheKey(for slug: String) -> String {
+        "genre_\(slug)_cache_metadata"
+    }
+}
+
 @MainActor
 final class GenreDetailViewModel: ObservableObject {
 
@@ -16,18 +57,26 @@ final class GenreDetailViewModel: ObservableObject {
     @Published var errorMessage: String? = nil
 
     private let service: GenreServiceProtocol
+    private let localStore: GenreDetailLocalStore
     private let pageSize = 32
     private var currentPage = 1
     private var totalPages = 1
     private var currentSlug: String?
     private var hasLoadedInitialPage = false
 
-    init(service: GenreServiceProtocol) {
+    init(
+        service: GenreServiceProtocol,
+        localStore: GenreDetailLocalStore
+    ) {
         self.service = service
+        self.localStore = localStore
     }
 
     convenience init() {
-        self.init(service: GenreService())
+        self.init(
+            service: GenreService(),
+            localStore: GenreDetailLocalStore()
+        )
     }
 
     func load(slug: String) async {
@@ -39,7 +88,19 @@ final class GenreDetailViewModel: ObservableObject {
         genreDetail = nil
         hasLoadedInitialPage = false
 
+        if let cachedGenreDetail = localStore.loadGenreDetail(slug: slug) {
+            genreDetail = cachedGenreDetail
+        }
+
         await fetchGenre(slug: slug, page: 1, reset: true)
+    }
+
+    func retryLoad() async {
+        guard let currentSlug else { return }
+        currentPage = 1
+        totalPages = 1
+        hasLoadedInitialPage = false
+        await fetchGenre(slug: currentSlug, page: 1, reset: true)
     }
 
     func loadMoreIfNeeded(currentItem: Song) async {
@@ -77,6 +138,10 @@ final class GenreDetailViewModel: ObservableObject {
             totalPages = response.pages
             currentPage = page + 1
             hasLoadedInitialPage = true
+
+            if page == 1 {
+                localStore.saveGenreDetail(response, slug: slug)
+            }
         } catch {
             errorMessage = error.localizedDescription
             print("❌ Failed to load genre: \(error)")

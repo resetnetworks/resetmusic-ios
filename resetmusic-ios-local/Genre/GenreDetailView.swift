@@ -16,21 +16,19 @@ struct GenreDetailView: View {
     @StateObject private var viewModel = GenreDetailViewModel()
     @EnvironmentObject private var playerVM: PlayerViewModel
     @Environment(\.dismiss) private var dismiss
-    
+
     @State private var scrollOffset: CGFloat = 0
-    
+    @State private var selectedTrackForMoreSheet: PlayerTrack?
+    @State private var selectedArtistRoute: ArtistNavigationRoute?
+
     private var isCurrentGenrePlaying: Bool {
         guard let songs = viewModel.genreDetail?.songs,
               let current = playerVM.currentTrack else { return false }
-
         return songs.contains(where: { $0.id == current.songId }) && playerVM.isPlaying
     }
 
-    private var showNavPlayButton: Bool {
-        scrollOffset > 220
-    }
-    
-    // MARK: - Calculate Total Duration
+    private var showNavPlayButton: Bool { scrollOffset > 220 }
+
     private var totalDuration: String {
         guard let songs = viewModel.genreDetail?.songs else { return "0:00" }
         let total = songs.compactMap { $0.duration }.reduce(0, +)
@@ -41,41 +39,48 @@ struct GenreDetailView: View {
         ZStack {
             Color.black.ignoresSafeArea()
 
-            if viewModel.isLoading {
-                loadingView
-            } else if let genreDetail = viewModel.genreDetail {
+            if let genreDetail = viewModel.genreDetail {
                 contentView(genreDetail: genreDetail)
+            } else if viewModel.isLoading {
+                loadingView
             } else if viewModel.errorMessage != nil {
                 errorView
             }
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
+//            ToolbarItem(placement: .navigationBarLeading) {
+//                Button(action: { dismiss() }) {
+//                    Image(systemName: "chevron.left")
+//                        .font(.system(size: 16, weight: .semibold))
+//                        .foregroundColor(.white)
+//                }
+//                .buttonStyle(.plain)
+//            }
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: { dismiss() }) {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.white)
+                        .frame(width: 44, height: 44)  // explicit HIG minimum
                 }
                 .buttonStyle(.plain)
+                .tint(.clear)
+                .contentShape(Rectangle())
             }
             ToolbarItem(placement: .principal) {
                 HStack(spacing: 8) {
-
                     Text(title.capitalized)
                         .font(.custom("Jura-SemiBold", size: 14))
                         .foregroundColor(.white.opacity(showNavPlayButton ? 1 : 0))
                         .padding(.trailing, 4)
-                    
+
                     Button(action: {
                         Task {
                             if isCurrentGenrePlaying {
                                 playerVM.togglePlayPause()
-                            } else {
-                                if let songs = viewModel.genreDetail?.songs,
-                                   let first = songs.first {
-                                    await playerVM.play(song: first, queue: songs)
-                                }
+                            } else if let songs = viewModel.genreDetail?.songs, let first = songs.first {
+                                await playerVM.play(song: first, queue: songs)
                             }
                         }
                     }) {
@@ -83,7 +88,6 @@ struct GenreDetailView: View {
                             Circle()
                                 .fill(Color(red: 0.25, green: 0.55, blue: 1.0))
                                 .frame(width: 48, height: 48)
-
                             Image(systemName: isCurrentGenrePlaying ? "pause.fill" : "play.fill")
                                 .foregroundColor(.white)
                                 .font(.system(size: 12, weight: .semibold))
@@ -98,13 +102,24 @@ struct GenreDetailView: View {
         }
         .toolbarBackground(.hidden, for: .navigationBar)
         .task { await viewModel.load(slug: slug) }
+        .sheet(item: $selectedTrackForMoreSheet) { track in
+            PlayerMoreSheetView(
+                track: track,
+                onViewArtist: { artistId, artistName in
+                    selectedArtistRoute = ArtistNavigationRoute(id: artistId, name: artistName)
+                }
+            )
+            .environmentObject(playerVM)
+        }
+        .navigationDestination(item: $selectedArtistRoute) { artist in
+            ArtistLoaderView(artistId: artist.id, artistName: artist.name)
+        }
     }
 
     // MARK: - Content
 
     private func contentView(genreDetail: GenreDetailResponse) -> some View {
         ScrollView(.vertical, showsIndicators: false) {
-
             GeometryReader { geo in
                 Color.clear
                     .onChange(of: geo.frame(in: .global).minY) { _, value in
@@ -116,23 +131,17 @@ struct GenreDetailView: View {
             VStack(alignment: .leading, spacing: 0) {
                 heroSection(genreDetail: genreDetail)
                 infoSection(genreDetail: genreDetail)
-                
-                if genreDetail.songs.isEmpty {
-                    comingSoonSection()
-                } else {
-                    songsSection(songs: genreDetail.songs)
-                }
+                songsSection(genreDetail: genreDetail)
             }
             .padding(.bottom, 100)
         }
         .ignoresSafeArea(edges: .top)
     }
-    
+
     // MARK: - Hero
 
     private func heroSection(genreDetail: GenreDetailResponse) -> some View {
         ZStack(alignment: .bottomLeading) {
-            // Use local asset since API doesn't return cover image
             Image("genre-\(slug)")
                 .resizable()
                 .scaledToFill()
@@ -140,19 +149,14 @@ struct GenreDetailView: View {
                 .frame(height: 320)
                 .clipped()
 
-            LinearGradient(
-                colors: [.clear, .black],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .frame(height: 320)
+            LinearGradient(colors: [.clear, .black], startPoint: .top, endPoint: .bottom)
+                .frame(height: 320)
 
             VStack(alignment: .leading, spacing: 6) {
                 Text("GENRE")
                     .font(.custom("Jura-Regular", size: 11))
                     .foregroundColor(.white.opacity(0.5))
                     .tracking(2)
-
                 Text(genreDetail.genre.capitalized)
                     .font(.custom("Jura-Bold", size: 34))
                     .foregroundColor(.white)
@@ -167,25 +171,17 @@ struct GenreDetailView: View {
 
     private func infoSection(genreDetail: GenreDetailResponse) -> some View {
         HStack(alignment: .center) {
-
-            // LEFT → Stats with Duration
             HStack(spacing: 20) {
                 statItem(value: "\(genreDetail.total)", label: "Tracks")
                 statItem(value: totalDuration, label: "Duration")
             }
-
             Spacer()
-
-            // RIGHT → Play Button (hides when scrolled)
             Button(action: {
                 Task {
                     if isCurrentGenrePlaying {
                         playerVM.togglePlayPause()
-                    } else {
-                        if let songs = viewModel.genreDetail?.songs,
-                           let first = songs.first {
-                            await playerVM.play(song: first, queue: songs)
-                        }
+                    } else if let songs = viewModel.genreDetail?.songs, let first = songs.first {
+                        await playerVM.play(song: first, queue: songs)
                     }
                 }
             }) {
@@ -193,20 +189,19 @@ struct GenreDetailView: View {
                     Circle()
                         .fill(Color(red: 0.25, green: 0.55, blue: 1.0))
                         .frame(width: 48, height: 48)
-
                     Image(systemName: isCurrentGenrePlaying && playerVM.isPlaying ? "pause.fill" : "play.fill")
                         .foregroundColor(.white)
                         .font(.system(size: 16, weight: .semibold))
                 }
             }
-            .opacity(showNavPlayButton ? 0 : 1) // ✅ Hide when nav button shows
+            .opacity(showNavPlayButton ? 0 : 1)
             .animation(.easeInOut(duration: 0.25), value: showNavPlayButton)
         }
         .padding(.horizontal, 20)
         .padding(.top, 24)
         .padding(.bottom, 8)
     }
-    
+
     private func statItem(value: String, label: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(value)
@@ -220,7 +215,7 @@ struct GenreDetailView: View {
 
     // MARK: - Songs Section
 
-    private func songsSection(songs: [Song]) -> some View {
+    private func songsSection(genreDetail: GenreDetailResponse) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Tracks")
                 .font(.custom("Jura-Bold", size: 22))
@@ -229,32 +224,40 @@ struct GenreDetailView: View {
                 .padding(.top, 32)
                 .padding(.bottom, 16)
 
-            ForEach(songs) { song in
-                TrackRow(
-                    song: song,
-                    isCurrentTrack: playerVM.currentTrack?.songId == song.id,
-                    isPlaying: playerVM.currentTrack?.songId == song.id && playerVM.isPlaying,
-                    onPlay: {
-                        Task {
-                            await playerVM.play(song: song, queue: songs)
+            if viewModel.isLoading && genreDetail.songs.isEmpty {
+                ForEach(0..<8, id: \.self) { _ in
+                    SkeletonTrackRow()
+                }
+            } else if genreDetail.songs.isEmpty && viewModel.errorMessage != nil {
+                trackUnavailableSection
+            } else if genreDetail.songs.isEmpty {
+                comingSoonSection()
+            } else {
+                ForEach(genreDetail.songs) { song in
+                    TrackRow(
+                        song: song,
+                        isCurrentTrack: playerVM.currentTrack?.songId == song.id,
+                        isPlaying: playerVM.currentTrack?.songId == song.id && playerVM.isPlaying,
+                        onPlay: {
+                            Task { await playerVM.play(song: song, queue: genreDetail.songs) }
+                        },
+                        onMore: {
+                            selectedTrackForMoreSheet = playerTrack(from: song)
                         }
-                    }
-                )
-                .onAppear {
-                    Task {
-                        await viewModel.loadMoreIfNeeded(currentItem: song)
+                    )
+                    .onAppear {
+                        Task { await viewModel.loadMoreIfNeeded(currentItem: song) }
                     }
                 }
-            }
 
-            if viewModel.isLoading && !songs.isEmpty {
-                HStack {
-                    Spacer()
-                    ProgressView()
-                        .tint(.white)
-                    Spacer()
+                if viewModel.isLoading {
+                    HStack {
+                        Spacer()
+                        ProgressView().tint(.white)
+                        Spacer()
+                    }
+                    .padding(.vertical, 20)
                 }
-                .padding(.vertical, 20)
             }
         }
     }
@@ -263,10 +266,6 @@ struct GenreDetailView: View {
 
     private func comingSoonSection() -> some View {
         VStack(alignment: .center, spacing: 8) {
-            Text("Tracks")
-                .font(.custom("Jura-Bold", size: 22))
-                .foregroundColor(.white)
-
             Text("Coming Soon")
                 .font(.custom("Jura-Regular", size: 14))
                 .foregroundColor(.white.opacity(0.5))
@@ -274,7 +273,7 @@ struct GenreDetailView: View {
         .frame(maxWidth: .infinity)
         .padding(.top, 40)
     }
-    
+
     // MARK: - Loading
 
     private var loadingView: some View {
@@ -296,10 +295,72 @@ struct GenreDetailView: View {
             Text("Couldn't load genre")
                 .font(.custom("Jura-Regular", size: 15))
                 .foregroundColor(.white.opacity(0.4))
+            Text("Check your connection and try again.")
+                .font(.custom("Jura-Regular", size: 13))
+                .foregroundColor(.white.opacity(0.35))
+                .multilineTextAlignment(.center)
+            Button(action: { Task { await viewModel.retryLoad() } }) {
+                Text("Try Again")
+                    .font(.custom("Jura-SemiBold", size: 14))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 10)
+                    .background(Color(red: 0.25, green: 0.55, blue: 1.0))
+                    .clipShape(Capsule())
+            }
             Spacer()
         }
+        .padding(.horizontal, 24)
+    }
+
+    // MARK: - Track Unavailable
+
+    private var trackUnavailableSection: some View {
+        VStack(alignment: .center, spacing: 12) {
+            Image(systemName: "exclamationmark.circle")
+                .font(.system(size: 32))
+                .foregroundColor(.white.opacity(0.3))
+            Text("Couldn't load tracks")
+                .font(.custom("Jura-Regular", size: 15))
+                .foregroundColor(.white.opacity(0.5))
+            Text("Check your connection and try again.")
+                .font(.custom("Jura-Regular", size: 13))
+                .foregroundColor(.white.opacity(0.4))
+                .multilineTextAlignment(.center)
+            Button(action: { Task { await viewModel.retryLoad() } }) {
+                Text("Try Again")
+                    .font(.custom("Jura-SemiBold", size: 14))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 10)
+                    .background(Color(red: 0.25, green: 0.55, blue: 1.0))
+                    .clipShape(Capsule())
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 40)
+        .padding(.horizontal, 20)
+    }
+
+    private func playerTrack(from song: Song) -> PlayerTrack {
+        PlayerTrack(
+            title: song.title,
+            artistName: song.artist.name,
+            artistId: song.artist.id,
+            coverImage: song.coverImage ?? "",
+            duration: Int(song.duration ?? 0),
+            isPreview: false,
+            songId: song.id
+        )
     }
 }
+
+private struct ArtistNavigationRoute: Identifiable, Hashable {
+    let id: String
+    let name: String
+}
+
+// MARK: - Preview
 
 #Preview {
     NavigationStack {

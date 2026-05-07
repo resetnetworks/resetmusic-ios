@@ -25,7 +25,7 @@ struct FullPlayerView: View {
     @State private var showUpgradeSheet  = false
     @State private var showQueueSheet    = false
     @State private var showMoreSheet     = false
-    @State private var showShareSheet    = false
+//    @State private var showShareSheet    = false
 
     // MARK: - Computed helpers
 
@@ -89,7 +89,7 @@ struct FullPlayerView: View {
                     track: playerVM.currentTrack,
                     isPlaying: playerVM.isPlaying,
                     artistTarget: artistTarget,
-                    onShareTap: { showShareSheet = true },
+//                    onShareTap: { showShareSheet = true },
                     onArtistTap: { navigateToArtist() }
                 )
 
@@ -138,13 +138,13 @@ struct FullPlayerView: View {
                 .presentationDetents([.height(320)])
                 .presentationDragIndicator(.visible)
         }
-        .sheet(isPresented: $showShareSheet) {
-            ShareSheetView()
-                .environmentObject(playerVM)
-                .presentationDetents([.height(300)])
-                .presentationDragIndicator(.visible)
-                .presentationBackground(.clear)
-        }
+//        .sheet(isPresented: $showShareSheet) {
+//            ShareSheetView()
+//                .environmentObject(playerVM)
+//                .presentationDetents([.height(300)])
+//                .presentationDragIndicator(.visible)
+//                .presentationBackground(.clear)
+//        }
         .sheet(isPresented: $showQueueSheet) {
             QueueSheetView()
                 .environmentObject(playerVM)
@@ -152,7 +152,11 @@ struct FullPlayerView: View {
                 .presentationDragIndicator(.visible)
         }
         .sheet(isPresented: $showMoreSheet) {
-            PlayerMoreSheetView()
+            PlayerMoreSheetView(
+                onViewArtist: { _, _ in
+                    navigateToArtist()
+                }
+            )
                 .environmentObject(playerVM)
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)

@@ -15,17 +15,22 @@ struct SearchScreen: View {
     @State private var searchTask: Task<Void, Never>?
     @FocusState private var isSearchFocused: Bool
     @EnvironmentObject private var playerVM: PlayerViewModel
+    var onProfileTap: () -> Void = {}
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
 
-            AppTopBar(mode: .title("Search"))
+            AppTopBar(mode: .title("Search", showsBell: false), onProfileTap: onProfileTap)
 
             VStack(alignment: .leading, spacing: 16) {
                 SearchField(text: $searchText, placeholderText: "Search artist, album or song")
                     .padding(.horizontal, 16)
                     .focused($isSearchFocused)
-
+                /*
+                Image(systemName: "mic")
+                    .foregroundColor(.white.opacity(0.6))
+                    .padding(.trailing, 16)
+                */
                 searchContent
             }
             .padding(.top, 20)
@@ -63,10 +68,16 @@ private extension SearchScreen {
                 if viewModel.isLoading && !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     loadingState
                 } else if let errorMessage = viewModel.errorMessage {
-                    messageState(
+                    retryMessageState(
                         title: "Search failed",
-                        message: errorMessage,
-                        systemImage: "exclamationmark.circle"
+                        message: searchErrorMessage(from: errorMessage),
+                        systemImage: "exclamationmark.circle",
+                        buttonTitle: "Try Again",
+                        action: {
+                            Task {
+                                await viewModel.retrySearch()
+                            }
+                        }
                     )
                 } else if !viewModel.hasSearched {
                     messageState(
@@ -174,6 +185,51 @@ private extension SearchScreen {
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 24)
         .padding(.top, 80)
+    }
+
+    func retryMessageState(
+        title: String,
+        message: String,
+        systemImage: String,
+        buttonTitle: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        VStack(spacing: 14) {
+            Image(systemName: systemImage)
+                .font(.system(size: 28))
+                .foregroundColor(Color(red: 0.25, green: 0.55, blue: 1.0).opacity(0.8))
+
+            Text(title)
+                .font(.custom("Jura-SemiBold", size: 18))
+                .foregroundColor(.white)
+
+            Text(message)
+                .font(.custom("Jura-Regular", size: 14))
+                .foregroundColor(.white.opacity(0.55))
+                .multilineTextAlignment(.center)
+
+            Button(action: action) {
+                Text(buttonTitle)
+                    .font(.custom("Jura-SemiBold", size: 14))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 10)
+                    .background(Color(red: 0.25, green: 0.55, blue: 1.0))
+                    .clipShape(Capsule())
+            }
+            .padding(.top, 4)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 24)
+        .padding(.top, 80)
+    }
+
+    func searchErrorMessage(from errorMessage: String) -> String {
+        let lowered = errorMessage.lowercased()
+        if lowered.contains("internet") || lowered.contains("offline") || lowered.contains("network") {
+            return "Check your connection and try again."
+        }
+        return "Something went wrong. Try again."
     }
 }
 

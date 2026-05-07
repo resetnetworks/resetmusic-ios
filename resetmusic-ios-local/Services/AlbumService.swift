@@ -22,4 +22,12 @@ final class AlbumService: AlbumServiceProtocol {
             responseType: ArtistAlbumsResponse.self
         )
     }
+
+    func fetchAlbum(id: String) async throws -> Album {
+        let response = try await NetworkManager.shared.request(
+            AlbumEndpoint.getById(id),
+            responseType: AlbumDetailResponse.self
+        )
+        return response.data
+    }
 }

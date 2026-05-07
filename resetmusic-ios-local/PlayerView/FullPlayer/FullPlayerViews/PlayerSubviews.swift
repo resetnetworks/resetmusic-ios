@@ -65,7 +65,7 @@ struct FullPlayerTrackInfo: View {
     let track: PlayerTrack?
     let isPlaying: Bool
     let artistTarget: FeaturedArtist?
-    let onShareTap: () -> Void
+//    let onShareTap: () -> Void
     let onArtistTap: () -> Void
 
     var body: some View {
@@ -89,34 +89,32 @@ struct FullPlayerTrackInfo: View {
             .layoutPriority(1)
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            // Actions — HIG: secondary actions grouped, consistent 40pt targets
-            HStack(spacing: 12) {
-                PlayerActionButton(icon: "plus") {}
-                PlayerActionButton(icon: "arrowshape.turn.up.right", action: onShareTap)
-            }
+//            HStack(spacing: 12) {
+//                PlayerActionButton(icon: "plus") {}
+//                PlayerActionButton(icon: "arrowshape.turn.up.right", action: onShareTap)
+//            }
         }
         .padding(.top, 28)
         .padding(.horizontal, 28)
     }
 }
 
-// Small reusable icon button used in the track info row
-private struct PlayerActionButton: View {
-    let icon: String
-    var action: () -> Void = {}
-
-    var body: some View {
-        Button(action: { triggerHaptic(); action() }) {
-            Image(systemName: icon)
-                .font(.system(size: icon == "plus" ? 16 : 14, weight: .semibold))
-                .foregroundColor(.white.opacity(0.85))
-                .frame(width: 40, height: 40)
-                .background(Circle().fill(Color.white.opacity(0.08)))
-                .overlay(Circle().stroke(Color.white.opacity(0.12), lineWidth: 1))
-        }
-        .buttonStyle(.plain)
-    }
-}
+//private struct PlayerActionButton: View {
+//    let icon: String
+//    var action: () -> Void = {}
+//
+//    var body: some View {
+//        Button(action: { triggerHaptic(); action() }) {
+//            Image(systemName: icon)
+//                .font(.system(size: icon == "plus" ? 16 : 14, weight: .semibold))
+//                .foregroundColor(.white.opacity(0.85))
+//                .frame(width: 40, height: 40)
+//                .background(Circle().fill(Color.white.opacity(0.08)))
+//                .overlay(Circle().stroke(Color.white.opacity(0.12), lineWidth: 1))
+//        }
+//        .buttonStyle(.plain)
+//    }
+//}
 
 // ─────────────────────────────────────────────
 // MARK: - Preview Banner

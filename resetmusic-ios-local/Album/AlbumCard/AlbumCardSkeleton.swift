@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AlbumCardSkeleton: View {
     
-    @State private var isAnimating = false
+    @State private var isPulsing = false
     
     private enum Layout {
         static let width: CGFloat = 172
@@ -20,34 +20,23 @@ struct AlbumCardSkeleton: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            // Cover skeleton
-            Rectangle()
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            Color.white.opacity(0.06),
-                            Color.white.opacity(0.12),
-                            Color.white.opacity(0.06)
-                        ],
-                        startPoint: isAnimating ? .leading : .trailing,
-                        endPoint: isAnimating ? .trailing : .leading
-                    )
-                )
+            
+            // Cover
+            RoundedRectangle(cornerRadius: 6)
+                .fill(Color.white.opacity(0.06))
                 .frame(width: Layout.width, height: Layout.imageHeight)
             
-            // Info skeleton
-            HStack(spacing: 4) {
-                // "by artist" skeleton
+            // Info
+            HStack(spacing: 6) {
                 RoundedRectangle(cornerRadius: 4)
-                    .fill(Color.white.opacity(0.06))
-                    .frame(width: 50, height: 12)
+                    .fill(Color.white.opacity(0.05))
+                    .frame(width: 50, height: 10)
                 
                 Spacer()
                 
-                // Artist name skeleton
                 RoundedRectangle(cornerRadius: 4)
                     .fill(Color.white.opacity(0.08))
-                    .frame(width: 80, height: 13)
+                    .frame(width: 80, height: 12)
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 10)
@@ -55,13 +44,13 @@ struct AlbumCardSkeleton: View {
         .frame(width: Layout.width)
         .background(Color(red: 0.047, green: 0.090, blue: 0.153))
         .cornerRadius(Layout.cornerRadius)
-        .clipped()
+        .opacity(isPulsing ? 0.85 : 1.0)
         .onAppear {
             withAnimation(
-                .linear(duration: 1.5)
+                .easeInOut(duration: 1.2)
                 .repeatForever(autoreverses: true)
             ) {
-                isAnimating = true
+                isPulsing = true
             }
         }
     }

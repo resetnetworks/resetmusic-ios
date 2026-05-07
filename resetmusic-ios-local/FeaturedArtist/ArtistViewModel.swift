@@ -16,13 +16,21 @@ final class ArtistViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
 
+    private let repository: ArtistRepository
     private let service: ArtistServiceProtocol
+    private var cacheRefreshObserver: AnyCancellable?
     private var currentPage = 1
-    private var totalPages = 1
+    private var hasMorePages = true
     private var latestQuery = ""
+    private var lastFailedPage: Int?
 
-    init(service: ArtistServiceProtocol = ArtistService()) {
+    init(
+        repository: ArtistRepository? = nil,
+        service: ArtistServiceProtocol = ArtistService()
+    ) {
+        self.repository = repository ?? ArtistViewModel.makeDefaultRepository(service: service)
         self.service = service
+        observeArtistCacheRefresh()
     }
 
     func loadArtists(reset: Bool = false) async {
@@ -32,25 +40,43 @@ final class ArtistViewModel: ObservableObject {
 
         if reset {
             currentPage = 1
-            totalPages = 1
+            hasMorePages = true
             artists = []
+            lastFailedPage = nil
         }
+
+        guard hasMorePages, currentPage != lastFailedPage else { return }
 
         isLoading = true
         errorMessage = nil
+        defer { isLoading = false }
 
         do {
-            let response = try await service.fetchArtists(page: currentPage)
+            let fetchedArtists = try await repository.getArtists(page: currentPage)
             guard latestQuery.isEmpty else { return }
-            artists.append(contentsOf: response.data)
-            totalPages = response.pagination.totalPages
-            currentPage += 1
+            lastFailedPage = nil
+
+            if fetchedArtists.isEmpty {
+                hasMorePages = false
+            } else if currentPage == 1 {
+                artists = fetchedArtists
+                currentPage += 1
+            } else {
+                let existingIDs = Set(artists.map(\.id))
+                let newArtists = fetchedArtists.filter { !existingIDs.contains($0.id) }
+
+                if newArtists.isEmpty {
+                    hasMorePages = false
+                } else {
+                    artists.append(contentsOf: newArtists)
+                    currentPage += 1
+                }
+            }
         } catch {
             guard latestQuery.isEmpty else { return }
+            lastFailedPage = currentPage
             errorMessage = error.localizedDescription
         }
-
-        isLoading = false
     }
 
     func searchArtists(query: String) async {
@@ -64,6 +90,7 @@ final class ArtistViewModel: ObservableObject {
 
         isLoading = true
         errorMessage = nil
+        defer { isLoading = false }
 
         do {
             let response = try await service.searchArtists(query: trimmedQuery, page: 1, limit: 10)
@@ -74,14 +101,39 @@ final class ArtistViewModel: ObservableObject {
             artists = []
             errorMessage = error.localizedDescription
         }
+    }
 
-        isLoading = false
+    func retryCurrentRequest() async {
+        if latestQuery.isEmpty {
+            await loadArtists(reset: true)
+        } else {
+            await searchArtists(query: latestQuery)
+        }
     }
 
     func loadMoreIfNeeded(currentItem: FeaturedArtist) async {
         guard let last = artists.last else { return }
-        if currentItem.id == last.id && currentPage <= totalPages {
+        if currentItem.id == last.id && hasMorePages {
             await loadArtists()
         }
+    }
+
+    private func observeArtistCacheRefresh() {
+        cacheRefreshObserver = NotificationCenter.default.publisher(for: .artistsCacheDidRefresh)
+            .compactMap { $0.object as? [FeaturedArtist] }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] refreshedArtists in
+                guard let self, self.latestQuery.isEmpty else { return }
+                self.artists = refreshedArtists
+                self.hasMorePages = true
+                self.lastFailedPage = nil
+            }
+    }
+
+    private static func makeDefaultRepository(service: ArtistServiceProtocol) -> ArtistRepository {
+        ArtistRepositoryImpl(
+            service: service,
+            localDataSource: ArtistLocalDataSourceImpl()
+        )
     }
 }

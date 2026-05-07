@@ -49,6 +49,15 @@ final class ArtistAlbumViewModel: ObservableObject {
         isLoading = false
     }
 
+    func retryLoadAlbums() async {
+        guard !artistId.isEmpty else { return }
+        currentPage = 1
+        totalPages = 1
+        albums = []
+        errorMessage = nil
+        await loadAlbums(for: artistId)
+    }
+
     func loadMoreIfNeeded(currentItem: Album) async {
         guard let last = albums.last else { return }
         if currentItem.id == last.id && currentPage <= totalPages {

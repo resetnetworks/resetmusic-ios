@@ -12,13 +12,23 @@ struct PlayerMoreSheetView: View {
     @EnvironmentObject var playerVM: PlayerViewModel
     @Environment(\.dismiss) var dismiss
     let track: PlayerTrack?
+    let onViewArtist: ((String, String) -> Void)?
 
-    init(track: PlayerTrack? = nil) {
+    init(
+        track: PlayerTrack? = nil,
+        onViewArtist: ((String, String) -> Void)? = nil
+    ) {
         self.track = track
+        self.onViewArtist = onViewArtist
     }
 
     private var activeTrack: PlayerTrack? {
         track ?? playerVM.currentTrack
+    }
+
+    private var canViewArtist: Bool {
+        guard let track = activeTrack else { return false }
+        return !track.artistId.isEmpty
     }
 
     var body: some View {
@@ -78,41 +88,36 @@ struct PlayerMoreSheetView: View {
 
                 // 🔥 ACTION LIST
                 VStack(spacing: 0) {
-
-                    MoreActionRow(icon: "square.and.arrow.up", title: "Share") {
-                        triggerHaptic()
-                        shareTrack()
-                    }
-                    
-                    MoreActionRow(icon: "heart", title: "Add to Liked Songs") {
-                        dismiss()
-                    }
-                    
+//                    MoreActionRow(icon: "square.and.arrow.up", title: "Share") {
+//                        triggerHaptic()
+//                        shareTrack()
+//                    }
+//
+//                    MoreActionRow(icon: "heart", title: "Add to Liked Songs") {
+//                        dismiss()
+//                    }
 
                     MoreActionRow(icon: "text.badge.plus", title: "Add to Queue") {
                         triggerHaptic()
                         addToQueue()
                     }
 
-//                    MoreActionRow(icon: "plus.circle", title: "Create Playlist") {
+//                    MoreActionRow(icon: "music.note.list", title: "Add to Playlist") {
 //                        triggerHaptic()
-//                        createPlaylist()
+//                        addToPlaylist()
 //                    }
 
-                    MoreActionRow(icon: "music.note.list", title: "Add to Playlist") {
-                        triggerHaptic()
-                        addToPlaylist()
+                    if canViewArtist {
+                        MoreActionRow(icon: "person", title: "View Artist") {
+                            triggerHaptic()
+                            viewArtist()
+                        }
                     }
 
-                    MoreActionRow(icon: "person", title: "View Artist") {
-                        triggerHaptic()
-                        viewArtist()
-                    }
-
-                    MoreActionRow(icon: "sparkles", title: "More like this") {
-                        triggerHaptic()
-                        viewGenre()
-                    }
+//                    MoreActionRow(icon: "sparkles", title: "More like this") {
+//                        triggerHaptic()
+//                        viewGenre()
+//                    }
                 }
                 .padding(.top, 10)
 
@@ -124,20 +129,19 @@ struct PlayerMoreSheetView: View {
 
 // MARK: - ACTIONS
 extension PlayerMoreSheetView {
-
-    func shareTrack() {
-        guard let track = activeTrack else { return }
-
-        let text = "Listening to \(track.title) by \(track.artistName)"
-        let av = UIActivityViewController(activityItems: [text], applicationActivities: nil)
-
-        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let root = scene.windows.first?.rootViewController {
-            root.present(av, animated: true)
-        }
-
-        dismiss()
-    }
+//    func shareTrack() {
+//        guard let track = activeTrack else { return }
+//
+//        let text = "Listening to \(track.title) by \(track.artistName)"
+//        let av = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+//
+//        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//           let root = scene.windows.first?.rootViewController {
+//            root.present(av, animated: true)
+//        }
+//
+//        dismiss()
+//    }
 
     func addToQueue() {
         guard let track = activeTrack else { return }
@@ -150,25 +154,23 @@ extension PlayerMoreSheetView {
         dismiss()
     }
 
-    func createPlaylist() {
-        print("Create playlist tapped")
-        dismiss()
-    }
-
-    func addToPlaylist() {
-        print("Add to playlist tapped")
-        dismiss()
-    }
-
     func viewArtist() {
-        print("Navigate to artist")
+        guard let track = activeTrack, !track.artistId.isEmpty else { return }
         dismiss()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            onViewArtist?(track.artistId, track.artistName)
+        }
     }
 
-    func viewGenre() {
-        print("Navigate to genre")
-        dismiss()
-    }
+//    func addToPlaylist() {
+//        print("Add to playlist tapped")
+//        dismiss()
+//    }
+//
+//    func viewGenre() {
+//        print("Navigate to genre")
+//        dismiss()
+//    }
 
     func triggerHaptic() {
         let impact = UIImpactFeedbackGenerator(style: .medium)

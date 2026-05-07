@@ -14,6 +14,12 @@ struct ArtistResponse: Codable {
     let pagination: Pagination
 }
 
+extension ArtistResponse {
+    func toArtists() -> [FeaturedArtist] {
+        data
+    }
+}
+
 struct ArtistSearchResponse: Codable {
     let success: Bool
     let query: String

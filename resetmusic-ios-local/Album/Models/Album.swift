@@ -106,3 +106,14 @@ struct AlbumResponse: Codable {
     let data: [Album]
     let pagination: Pagination
 }
+
+extension AlbumResponse {
+    func toAlbums() -> [Album] {
+        data
+    }
+}
+
+struct AlbumDetailResponse: Codable {
+    let success: Bool
+    let data: Album
+}

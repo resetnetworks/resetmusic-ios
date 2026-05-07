@@ -69,4 +69,9 @@ final class SearchViewModel: ObservableObject {
             hasSearched = true
         }
     }
+
+    func retrySearch() async {
+        guard !latestQuery.isEmpty else { return }
+        await search(query: latestQuery)
+    }
 }
