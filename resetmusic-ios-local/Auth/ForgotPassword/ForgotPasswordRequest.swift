@@ -17,6 +17,6 @@ struct ForgotPasswordRequest: Encodable {
 // MARK: - Response
 
 struct ForgotPasswordResponse: Decodable {
-    let success: Bool
+//    let success: Bool
     let message: String
 }
